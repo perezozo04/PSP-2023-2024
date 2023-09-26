@@ -1,28 +1,16 @@
-import java.io.*;
+import java.io.IOException;
 
 public class EjecutaEdit {
     public static void main(String[] args) {
 
-        String[] comando = {"ls", "-l"};
-        Runtime runtimeActual = Runtime.getRuntime();
+        String comando = "gedit";
+
+        ProcessBuilder pb = new ProcessBuilder(comando);
         try {
-            Process p = runtimeActual.exec(comando);
-            InputStream is = p.getInputStream();
-            InputStreamReader isr = new InputStreamReader(is);
-            BufferedReader buffer = new BufferedReader(isr);
-            while ( linea != null) {
-                String linea;
-                linea = buffer.readLine();
-            }
-            try {
-                int estado = p.waitFor();
-                System.out.println("Proceso principal " + estado);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+            Process p = pb.start();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
-        System.out.println("Terminado principal Proceso");
+        System.out.println("Terminado principal");
     }
 }
