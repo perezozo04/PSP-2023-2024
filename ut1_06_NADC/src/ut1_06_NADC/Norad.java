@@ -13,10 +13,10 @@ public class Norad {
         Misil[] misil = new Misil[MAXMISILES];
 
         PipedWriter[] emisor = new PipedWriter[MAXMISILES];
-        PrintWriter[] flujos = new PrintWriter[MAXMISILES];
+        PrintWriter[] flujoS = new PrintWriter[MAXMISILES];
         for (int i = 0; i < misil.length; i++) {
             emisor[i] = new PipedWriter();
-            flujos[i] = new PrintWriter(emisor[i]);
+            flujoS[i] = new PrintWriter(emisor[i]);
             misil[i] = new Misil(i,sincro,emisor[i]);
         }
         sincro.esperarMisilesListos();
@@ -34,9 +34,15 @@ public class Norad {
         }
     }
 
-    private static void dobleVerificacion(PrintWriter[] flujoS, String comando) {
+    private static void dobleVerificacion(PrintWriter[] flujoS) {
         for (int i = 0; i < MAXMISILES; i++) {
-            flujoS[i].println("atacar");
+            try {
+                Thread.sleep(50);
+                flujoS[i].println("atacar");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
 
         }
     }
