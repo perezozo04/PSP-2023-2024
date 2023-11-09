@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="vista">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/vista.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
