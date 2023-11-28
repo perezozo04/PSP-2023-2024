@@ -7,6 +7,8 @@ import java.util.Scanner;
 public class Anocode {
     private static Estacion[] escucha;
     private static PipedWriter[] emisor;
+    private static PipedWriter pipedRadioSalida;
+    private static PipedReader pipedRadioEntr;
     private static Sincro sincro;
     private static PipedReader readerGlobal;
 

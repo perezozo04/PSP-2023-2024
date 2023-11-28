@@ -1,19 +1,15 @@
-import java.io.IOException;
-import java.io.PipedWriter;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.Random;
-import java.util.concurrent.Semaphore;
 
 public class Estacion extends Thread {
     private boolean fin = false;
-    public PipedWriter emisor;
+    public PrintWriter flujoS;
     private Sincro sincro;
+    private BufferedReader flujoE;
     private int numeroEstacion;
 
-    public Estacion(PipedWriter emisor, Sincro sincro, int numeroEstacion) {
-        this.emisor = emisor;
-        this.sincro = sincro;
-        this.numeroEstacion = numeroEstacion;
+    public Estacion(PipedWriter emisor, PipedReader receptor, Sincro sincro, int numeroEstacion) {
+
         this.start();
         sincro.notificarEstacionLista();
     }
@@ -32,6 +28,7 @@ public class Estacion extends Thread {
                     e.printStackTrace();
                 }
             }
+
         }
 
     }
@@ -62,5 +59,9 @@ public class Estacion extends Thread {
         }
         sincro.releasePrint();
 
+    }
+
+    public boolean leerOrden() {
+        
     }
 }
