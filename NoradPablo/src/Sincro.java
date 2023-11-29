@@ -1,7 +1,7 @@
 import java.util.concurrent.CountDownLatch;
 
 public class Sincro {
-    private int maxMisiles;
+
 
     private CountDownLatch misilCreado;
     private CountDownLatch misilActivado;

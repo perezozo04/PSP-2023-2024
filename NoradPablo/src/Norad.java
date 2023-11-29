@@ -31,7 +31,7 @@ public class Norad {
         Scanner teclado = new Scanner(System.in);
 
         boolean fin = false;
-        //while (!fin) {
+        while (!fin) {
             System.out.print("Orden -> ");
             String orden = teclado.nextLine();
             if (orden.equals("ataca")) {
@@ -46,9 +46,9 @@ public class Norad {
                 sincro.esperarActivacion();
 
                 System.out.println("Todos los misiles estan activados");
-                // fin = true;
+                 fin = true;
 
-           // }
+            }
 
 
 

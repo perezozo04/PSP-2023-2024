@@ -3,13 +3,28 @@ import java.util.Random;
 
 public class Estacion extends Thread {
     private boolean fin = false;
-    public PrintWriter flujoS;
-    private Sincro sincro;
+    private PipedWriter radioEmisor;
+    private PrintWriter flujoS;
+
+    private PipedReader receptor;
     private BufferedReader flujoE;
-    private int numeroEstacion;
+    private Sincro sincro;
+    private int id;
 
-    public Estacion(PipedWriter emisor, PipedReader receptor, Sincro sincro, int numeroEstacion) {
 
+
+    public Estacion(int id, Sincro sincro, PipedWriter radioEmisor, PipedWriter emisor) {
+        this.id = id;
+        this.sincro = sincro;
+        this.radioEmisor = radioEmisor;
+        this.flujoS = new PrintWriter(radioEmisor);
+
+        try {
+            this.receptor = new PipedReader(emisor);
+            this.flujoE = new BufferedReader(receptor);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         this.start();
         sincro.notificarEstacionLista();
     }
@@ -19,15 +34,18 @@ public class Estacion extends Thread {
         while (!fin) {
 
             if (generarNumeroRandom() == 10) {
+                sincro.lockprint();
                 notificarAtaque();
-            } else {
-                // esperarRandom();
-                try {
-                    Thread.sleep(7000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+
+                if (leerOrden()) {
+                    System.out.println("Estacion " + this.id + " ha atacado");
                 }
+                sincro.releasePrint();
+            } else {
+                esperarRandom();
+
             }
+
 
         }
 
@@ -48,20 +66,24 @@ public class Estacion extends Thread {
     }
 
     public void notificarAtaque() {
-        int mensaje = this.numeroEstacion ;
-        sincro.lockprint();
-        System.out.println("Movimiento detectado en " + mensaje);
-        try {
-            emisor.write(mensaje);
-            emisor.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        sincro.releasePrint();
+
+        System.out.println("Movimiento detectado en " + this.id);
+        flujoS.println(this.id);
+        flujoS.flush();
+
 
     }
 
     public boolean leerOrden() {
-        
+        try {
+            String orden = flujoE.readLine();
+            if (orden.equals("atacar")) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
