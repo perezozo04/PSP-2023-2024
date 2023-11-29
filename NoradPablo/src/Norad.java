@@ -7,7 +7,7 @@ public class Norad {
 
     public static void main(String[] args) {
         Misiles[] misiles = new Misiles[MAX_MISILES];
-        Sincro sincro = new Sincro();
+        Sincro sincro = new Sincro(MAX_MISILES);
 
         PipedWriter[] emisor = new PipedWriter[MAX_MISILES];
         PrintWriter[] flujoS = new PrintWriter[MAX_MISILES];
@@ -35,28 +35,23 @@ public class Norad {
             System.out.print("Orden -> ");
             String orden = teclado.nextLine();
             if (orden.equals("ataca")) {
-                sincro.lanzarMisil();
+
                 for (int i = 0; i < MAX_MISILES; i++) {
                     flujoS[i].println("ataca");
                     flujoS[i].flush();
-                }
-                sincro.esperarActivacion();
 
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
                 }
+
+
+                sincro.esperarActivacion();
 
                 System.out.println("Todos los misiles estan activados");
                 // fin = true;
 
            // }
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
+
+
+
                 System.out.println("Aciertos: " + sincro.getAciertos());
             System.out.println("Fallos: " + sincro.getFallos());
         }

@@ -1,8 +1,15 @@
 import java.util.concurrent.CountDownLatch;
 
 public class Sincro {
-    private CountDownLatch misilCreado = new CountDownLatch(Norad.MAX_MISILES);
-    private CountDownLatch misilActivado = new CountDownLatch(1);
+    private int maxMisiles;
+
+    private CountDownLatch misilCreado;
+    private CountDownLatch misilActivado;
+
+    public Sincro(int maxMisiles) {
+        this.misilCreado = new CountDownLatch(maxMisiles);
+        this.misilActivado = new CountDownLatch(maxMisiles);
+    }
 
     public int getAciertos() {
         return aciertos;

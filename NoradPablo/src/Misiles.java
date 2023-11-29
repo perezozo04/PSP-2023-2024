@@ -34,6 +34,7 @@ public class Misiles extends Thread{
                 } else {
                     sincro.sumarFallo();
                 }
+                sincro.lanzarMisil();
             }
 
         } catch (IOException e) {
