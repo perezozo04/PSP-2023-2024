@@ -4,7 +4,7 @@ public class Ruleta {
 
     public int numeroRandomTresSeis(){
         Random random = new Random();
-        return random.nextInt(36);
+        return random.nextInt(6)+5;
     }
 
     public int numeroRandomParImpar() {
